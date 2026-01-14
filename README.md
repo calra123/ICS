@@ -1,4 +1,5 @@
 # ICS
+
 how to manually create an ICS file
 
 Has two calendar tags: BEGIN and END
@@ -25,7 +26,8 @@ The sampleEvent.ics file has been working on Google Calendar as of 14 January 20
 
 On Linux, use this cmd to generate the timestamp in this format:
 
-```date --utc +%Y%m%dT%H%M%SZ
+```
+date --utc +%Y%m%dT%H%M%SZ
 ```
 
-
+Hope it helps!
