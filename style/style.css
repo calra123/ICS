@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+}
+
+/*body {
+  text-align: center;
+  padding: 20px;
+  font-family: "Arial";
+  text: #333;
+  background: #fff;
+}
+input {
+margin: 20px;
+}
+
+form {
+  border: 1px solid;
+  padding: 5px;
+}
+p {
+  display: flex;
+  align-items: center;
+}
+label {
+  display: inline-block;
+  min-width: 190px;
+  text-align: left;
+}*/

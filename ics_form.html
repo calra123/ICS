@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Event Reminder</title>
+    <link href="./dist/output.css" rel="stylesheet">
+  </head>
+  <body class="bg-blue-100">
+
+<form id="form"  class="px-4 my-32 max-w-3xl mx-auto space-y-6 ">
+  <div>
+      <p class="text-3xl font-semibold "> Type in the Event Details!</p> 
+      <p class="text-small text-grey-600">Share your ics file with others!</p>
+  </div>
+ 
+  <p class="">
+  <label for="title">Title</label>
+  <input class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500" type="text" id="title" name="event_title">
+  </p>
+  <div class="flex space-x-2">
+    <p class="">
+    <label for="start_date">Start Date</label>
+    <input class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500" type="date" id="start_date" name="start_date">
+    </p>
+    <p>
+    <label for="start_time">Start Time</label>
+    <input id="start_time" class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500" type="time" name="start_time" value="09:00">  
+    </p>
+   </div>
+    <div class="flex space-x-2">
+    <p class="">
+    <label for="end_date">End Date</label>
+    <input class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500" type="date" id="end_date" name="end_date">
+    </p>  
+ 
+    <p>
+      <label for="end_time">End Time</label>
+      <input id="end_time" class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500" type="time" name="end_time" value="09:10">
+    </p>
+  
+    </div>
+    <div>
+    <input type="checkbox" id="checkbox" name="repeat" unchecked class="w-4 h-4 transform scale-150" >
+    <label for="repeat">Repeats?</label>
+    </div>
+    <div class="hidden" id="frequency_container">
+    <div>
+    <p>
+      <input type="radio" name="frequency_type" value="daily" id="daily">
+      <label for="daily">Daily: I want to repeat every <input class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 rounded focus:outline-none focus:border-teal-500"  type="number" name="freq_num" value="1" id="daily_num"> day(s). </label>
+    </p>
+    <p>
+      <input type="radio" name="frequency_type" value="weekly" id="weekly">
+       <label for="weekly">Weekly: I want to repeat every <input class="bg-blue-50 w-20 border border-gray-400 py-2 px-4  rounded focus:outline-none focus:border-teal-500"  type="number" name="freq_num" value="1" id="weekly_num"> week(s). </label>
+       <div class="pl-4">
+      <ul>
+        <li>
+      <input type="checkbox" name="day" value="Sunday" id="sun">
+      <label for="mon">Sunday</label>
+        </li>
+        <li>
+       <input type="checkbox" name="day" value="Monday" id="mon">
+      <label for="mon">Monday</label>
+        </li>
+        <li>
+       <input type="checkbox" name="day" value="Tuesday" id="tue">
+      <label for="tue">Tuesday</label>
+        </li>
+        <li>
+       <input type="checkbox" name="day" value="Wednesday" id="wed">
+      <label for="wed">Wednesday</label>
+        </li>
+        <li>
+       <input type="checkbox" name="day" value="Thursday" id="thu">
+      <label for="thu">Thursday</label>
+        </li>
+        <li>
+       <input type="checkbox" name="day" value="Friday" id="fri">
+      <label for="fri">Friday</label>
+        </li>
+        <li>
+       <input type="checkbox" name="day" value="Saturday" id="sat">
+      <label for="sat">Saturday</label>
+        </li>
+        </ul>
+        </div>
+    </p>
+    <p>
+      <input type="radio" name="frequency_type" value="yearly" id="yearly">
+      <label for="yearly">Yearly: I want to repeat every <input class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 rounded focus:outline-none focus:border-teal-500"  type="number" name="freq_num" value="1" id="yearly_num"> year(s) . </label>
+    </p>
+    </div>
+    <div>
+    <label> Count: For how many days do you want the reminder to repeat? <input class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 rounded focus:outline-none focus:border-teal-500"  type="number" name="freq_num" value="1" id="count"></label> 
+    </div>
+
+   </div>
+   <p>
+  <label for="description">Description</label>
+  <textarea class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500" id="description" rows="4" cols="50"></textarea>
+  </p>
+
+<button id="button" class="font-semibold bg-blue-800 px-4 py-2 text-white rounded" type="submit" name="Submit" value="Button"> Download
+</button>
+</form>
+     <<script src="main.js">
+    </script> 
+  
+  </body>
+</html>
