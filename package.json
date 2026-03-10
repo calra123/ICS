@@ -1,0 +1,4 @@
+"scripts": {
+	"build": "npx tailwindcss -i ./style/style.css -o ./dist/output.css --minify"
+}
+
