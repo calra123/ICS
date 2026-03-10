@@ -4,12 +4,13 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "npx tailwindcss -i ./style/style.css -o ./dist/output.css --minify"
+    "build": "npx @tailwindcss/cli -i ./style/style.css -o ./dist/output.css --minify"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "tailwindcss": "latest"
+    "tailwindcss": "latest",
+    "@tailwindcss/cli": "latest"
   }
 }
