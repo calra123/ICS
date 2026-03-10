@@ -1,6 +1,15 @@
 {
-	"scripts": {
-	"build": "npx tailwindcss -i ./style/style.css -o ./dist/output.css --minify"
-	}
+  "name": "timo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./style/style.css -o ./dist/output.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "latest"
+  }
 }
-
