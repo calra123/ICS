@@ -211,6 +211,8 @@ END:VCALENDAR
 
 const button = document.getElementById("button");
 button.addEventListener("click", testFn);
+const shareBtn = document.getElementById("share");
+button.addEventListener("click", shareFile);
 
 function iso8601Basic(date) {
   return date.toString().replace(/[-:.]/g, "");

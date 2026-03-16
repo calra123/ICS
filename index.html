@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Event Reminder</title>
+    <title>Timo: Right on Time!</title>
     <link href="./dist/output.css" rel="stylesheet" />
   </head>
   <body class="bg-blue-100 font-nunito">
@@ -257,7 +257,7 @@
           id="description"
           rows="4"
           cols="50"
-          placeholder="bring extra cups"
+          placeholder="tell the correct chai recipe"
         ></textarea>
       </p>
       <p>
@@ -268,7 +268,7 @@
           id="location"
           rows="4"
           cols="50"
-          placeholder="joan's home"
+          placeholder="Friend's home"
         />
       </p>
       <button
@@ -280,11 +280,48 @@
       >
         Download
       </button>
-      <p class="text-sm text-gray-600 max-w-xs">
-        Share the ics file! <br /><br />
-        (Hint: Send it over whatsapp, signal, mail or other messengers)
-      </p>
+      <button
+        id="share"
+        class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
+        name="Share"
+        value="Button"
+      >
+        Share
+      </button>
+
+      <div class="pt-10 space-y-3 border-t border-gray-200 mt-10">
+        <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+          <img
+            src="./download-circular-button.png"
+            class="w-5 h-5 opacity-30 grayscale"
+            alt="Download icon"
+          />
+          <span>Download</span>
+        </div>
+        <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+          <img
+            src="./book.png"
+            class="w-5 h-5 opacity-30 grayscale"
+            alt="Book icon"
+          />
+          <span>Open to preview it in a calendar app</span>
+        </div>
+        <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+          <img
+            src="./send.png"
+            class="w-5 h-5 opacity-30 grayscale"
+            alt="Send icon"
+          />
+          <span>Share it with your friends 'n' family</span>
+        </div>
+      </div>
     </form>
+    <footer class="mt-20 py-10 border-t border-gray-200">
+      <div class="text-center text-xs text-gray-400 italic">
+        <p>&copy; 2026 Timo &bull; Made with <3 Calra</p>
+      </div>
+    </footer>
+
     <script src="main.js"></script>
   </body>
 </html>
