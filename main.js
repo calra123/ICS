@@ -1,3 +1,27 @@
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash;
+  if (hash.startsWith("#data=")) {
+    const base64 = hash.replace("#data=", "");
+    try {
+      // 1. Decode Base64 back to string
+      //      const icsContent = decodeURIComponent(escape(atob(base64)));
+      const icsContent =
+        LZString.decompressFromEncodedURIComponent(compressedData);
+      // 2. Trigger the download automatically for the recipient
+      const blob = new Blob([icsContent], { type: "text/calendar" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "event.ics";
+      a.click();
+
+      // Clean up the URL so they don't download it again on refresh
+      window.history.replaceState(null, null, window.location.pathname);
+    } catch (e) {
+      console.error("Failed to parse calendar data from URL", e);
+    }
+  }
+});
 const startDate = document.getElementById("start_date");
 let today = new Date().toISOString().split("T")[0];
 startDate.value = today;
@@ -113,7 +137,9 @@ dayCheckboxes.forEach((cb) => {
   cb.addEventListener("change", updateRRule);
 });
 
-function testFn(event) {
+function getEventData(event) {
+  console.log("value of event", event);
+  console.log("type of event", typeof event);
   event.preventDefault();
   const titleInput = document.getElementById("title").value.trim();
   if (!titleInput) {
@@ -182,20 +208,27 @@ END:VCALENDAR
 
   let finalIcs = icsTemplate.trim();
   finalIcs = finalIcs.replace(/\r\n/g, "\n").replace(/\n/g, "\r\n");
-  const blob = new Blob([finalIcs], { type: "text/plain" });
+  return finalIcs;
+}
+
+function testFn(event) {
+  const finalIcs = getEventData(event);
+  const blob = new Blob([finalIcs], { type: "text/calendar" });
   const url = URL.createObjectURL(blob);
   const download = document.createElement("a");
   download.href = url;
+  const titleInput = document.getElementById("title").value.trim();
   const downloadFileName = (titleInput.split(" ")[0] || "Event") + ".ics";
   download.download = downloadFileName;
   document.body.appendChild(download);
+
   download.click();
   document.body.removeChild(download);
   URL.revokeObjectURL(url);
 
   // Success Feedback
   const originalText = button.innerText;
-  button.innerText = "Downloaded!";
+  button.innerText = "Done!";
   button.classList.replace("bg-blue-800", "bg-green-600");
 
   // Clear inputs
@@ -209,10 +242,54 @@ END:VCALENDAR
   }, 2000);
 }
 
+async function shareFile(event) {
+  const icsString = getEventData(event);
+  console.log(icsString.length);
+  console.log("len>>>");
+  // const encoder = new TextEncoder();
+  // const uint8Array = encoder.encode(icsString);
+  const compressed = LZString.compressToEncodedURIComponent(icsString);
+  //  const base64 = uint8Array.toBase64({ alphabet: "base64url" });
+  console.log(compressed);
+  //  const shareLink = `${window.location.origin}${window.location.pathname}#data=${base64}`;
+  const shareLink = `${window.location.origin}${window.location.pathname}#data=${compressed}`;
+  // 2. Create File directly from the typed array
+  //
+  //
+  //  const file = new File([uint8Array], "event.ics", { type: "text/calendar" });
+  //
+  //  // 3. Debugging checks
+  //  console.log("File size:", file.size);
+  //  if (file.size === 0) return alert("File is empty!");
+  //  //  const blob = new Blob([finalIcs], { type: "text/calendar" });
+  const titleInput = document.getElementById("title").value.trim() || "Event";
+  //  const fileName = title.replace(/[^a-z0-9]/gi, "_") + ".ics";
+  //  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+
+  // const file = new File([blob], fileName, { type: "text/plain" });
+  if (navigator.canShare) {
+    try {
+      await navigator.share({
+        url: shareLink,
+        // url: "https://google.com",
+        title: "Event: " + titleInput,
+        text: `Hello! I created an event reminder for you :). Download it and add it to your calendar \n`,
+      });
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        console.error("Unable to share", err);
+      }
+    }
+  } else {
+    console.warn("Browser does not support sharing files.");
+  }
+}
+
 const button = document.getElementById("button");
 button.addEventListener("click", testFn);
+
 const shareBtn = document.getElementById("share");
-button.addEventListener("click", shareFile);
+shareBtn.addEventListener("click", shareFile);
 
 function iso8601Basic(date) {
   return date.toString().replace(/[-:.]/g, "");
