@@ -1,0 +1,8 @@
+name = "calendar-worker"
+main = "src/index.js"
+compatibility_date = "2026-04-10"
+
+[[kv_namespaces]]
+binding = "CALENDAR_STORE"
+id = "5bcc3ead8ded48e99526c8391007c2ca"
+

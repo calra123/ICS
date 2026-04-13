@@ -1,27 +1,3 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const hash = window.location.hash;
-  if (hash.startsWith("#data=")) {
-    const base64 = hash.replace("#data=", "");
-    try {
-      // 1. Decode Base64 back to string
-      //      const icsContent = decodeURIComponent(escape(atob(base64)));
-      const icsContent =
-        LZString.decompressFromEncodedURIComponent(compressedData);
-      // 2. Trigger the download automatically for the recipient
-      const blob = new Blob([icsContent], { type: "text/calendar" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "event.ics";
-      a.click();
-
-      // Clean up the URL so they don't download it again on refresh
-      window.history.replaceState(null, null, window.location.pathname);
-    } catch (e) {
-      console.error("Failed to parse calendar data from URL", e);
-    }
-  }
-});
 const startDate = document.getElementById("start_date");
 let today = new Date().toISOString().split("T")[0];
 startDate.value = today;
@@ -241,18 +217,37 @@ function testFn(event) {
     button.classList.replace("bg-green-600", "bg-blue-800");
   }, 2000);
 }
+function sendDataToCloudFlare() {
+  // send ics file to cloudflare KV
+}
 
+function readDatafromKV() {
+  // read the link
+  // find the mapping
+  // download the file
+}
 async function shareFile(event) {
+  console.log("inside share file!");
+  //  const cfLink = "https://calendar-worker.mailto-calra.workers.dev/save";
+  const cfLink = "http://localhost:8787/save";
   const icsString = getEventData(event);
-  console.log(icsString.length);
-  console.log("len>>>");
+  let res = await fetch(cfLink, {
+    method: "POST",
+    body: icsString,
+  });
+  const data = await res.json();
+  console.log("resp from worker", data);
+  const shareLink = `${window.location.origin}${window.location.pathname}e/${data.id}`;
+
+  alert(shareLink);
+  // Send this to cloudflare.
   // const encoder = new TextEncoder();
   // const uint8Array = encoder.encode(icsString);
   const compressed = LZString.compressToEncodedURIComponent(icsString);
   //  const base64 = uint8Array.toBase64({ alphabet: "base64url" });
   console.log(compressed);
   //  const shareLink = `${window.location.origin}${window.location.pathname}#data=${base64}`;
-  const shareLink = `${window.location.origin}${window.location.pathname}#data=${compressed}`;
+  //  const shareLink = `${window.location.origin}${window.location.pathname}#data=${compressed}`;
   // 2. Create File directly from the typed array
   //
   //
