@@ -1,7 +1,17 @@
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    console.log("Path visited:", url.pathname);
 
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+    }
     if (url.pathname === "/favicon.ico") {
       return new Response(null, { status: 204 });
     }
@@ -20,12 +30,12 @@ export default {
       return response;
     }
 
-    if (request.method === "GET" && url.pathname === "/e/") {
-      const eventID = url.pathname.startswith("/e/");
-      const icsData = await env.CALENDAR_STORE.get(id);
-      return new Response(JSON.stringify({ icsData }), {
+    if (request.method === "GET" && url.pathname.startsWith("/e/")) {
+      const eventID = url.pathname.split("/")[2];
+      const icsData = await env.CALENDAR_STORE.get(eventID);
+      return new Response(icsData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/calendar",
           "Access-Control-Allow-Origin": "*",
         },
       });

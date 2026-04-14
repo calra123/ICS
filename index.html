@@ -1,13 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>
       eruda.init();
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+    -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:8787; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;"
+    />
     <title>Timo: Right on Time!</title>
     <link href="./dist/output.css" rel="stylesheet" />
   </head>
@@ -26,301 +31,322 @@
         <p class="text-sm text-gray-600 max-w-xs">Create. Download. Share.</p>
       </div>
     </div>
-    <form id="form" class="px-4 my-22 max-w-3xl mx-auto space-y-6">
-      <div>
-        <p class="text-3xl font-semibold">Create a reminder</p>
-      </div>
 
-      <p class="">
-        <label for="title">Title</label>
-        <input
-          class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
-          type="text"
-          id="title"
-          name="event_title"
-          required
-        />
-      </p>
-      <div class="flex space-x-2">
-        <p class="">
-          <label for="start_date">Start Date</label>
-          <input
-            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
-            type="date"
-            id="start_date"
-            name="start_date"
-          />
-        </p>
-        <p>
-          <label for="start_time">Start Time</label>
-          <input
-            id="start_time"
-            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500"
-            type="time"
-            name="start_time"
-            value="09:00"
-          />
-        </p>
-      </div>
-      <div class="flex space-x-2">
-        <p class="">
-          <label for="end_date">End Date</label>
-          <input
-            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
-            type="date"
-            id="end_date"
-            name="end_date"
-          />
-        </p>
-
-        <p>
-          <label for="end_time">End Time</label>
-          <input
-            id="end_time"
-            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500"
-            type="time"
-            name="end_time"
-            value="09:10"
-          />
-        </p>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="checkbox"
-          name="repeat"
-          class="w-4 h-4 transform scale-150 mx-1"
-        />
-        <label for="repeat">Repeats?</label>
-      </div>
-      <div class="hidden" id="frequency_container">
+    <div id="creator-ui" style="display: block">
+      <form id="form" class="px-4 my-22 max-w-3xl mx-auto space-y-6">
         <div>
-          <p>
+          <p class="text-3xl font-semibold">Create a reminder</p>
+        </div>
+
+        <p class="">
+          <label for="title">Title</label>
+          <input
+            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
+            type="text"
+            id="title"
+            name="event_title"
+            required
+          />
+        </p>
+        <div class="flex space-x-2">
+          <p class="">
+            <label for="start_date">Start Date</label>
             <input
-              type="radio"
-              name="frequency_type"
-              value="daily"
-              id="daily"
+              class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
+              type="date"
+              id="start_date"
+              name="start_date"
             />
-            <label for="daily"
-              >Daily: Repeat every
-              <input
-                class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
-                type="number"
-                name="freq_num"
-                value="1"
-                id="daily_num"
-              />
-              day(s).
-            </label>
           </p>
-          <div>
+          <p>
+            <label for="start_time">Start Time</label>
             <input
-              type="radio"
-              name="frequency_type"
-              value="weekly"
-              id="weekly"
+              id="start_time"
+              class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500"
+              type="time"
+              name="start_time"
+              value="09:00"
             />
-            <label for="weekly"
-              >Weekly: Repeat every
+          </p>
+        </div>
+        <div class="flex space-x-2">
+          <p class="">
+            <label for="end_date">End Date</label>
+            <input
+              class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
+              type="date"
+              id="end_date"
+              name="end_date"
+            />
+          </p>
+
+          <p>
+            <label for="end_time">End Time</label>
+            <input
+              id="end_time"
+              class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500"
+              type="time"
+              name="end_time"
+              value="09:10"
+            />
+          </p>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="checkbox"
+            name="repeat"
+            class="w-4 h-4 transform scale-150 mx-1"
+          />
+          <label for="repeat">Repeats?</label>
+        </div>
+        <div class="hidden" id="frequency_container">
+          <div>
+            <p>
               <input
-                class="bg-blue-50 w-20 border border-gray-400 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
-                type="number"
-                name="freq_num"
-                value="1"
-                id="weekly_num"
+                type="radio"
+                name="frequency_type"
+                value="daily"
+                id="daily"
               />
-              week(s).
-            </label>
-            <div class="mt-4">
-              <div
-                class="grid grid-cols-7 border border-gray-400 rounded-full overflow-hidden bg-blue-50"
-              >
+              <label for="daily"
+                >Daily: Repeat every
+                <input
+                  class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
+                  type="number"
+                  name="freq_num"
+                  value="1"
+                  id="daily_num"
+                />
+                day(s).
+              </label>
+            </p>
+            <div>
+              <input
+                type="radio"
+                name="frequency_type"
+                value="weekly"
+                id="weekly"
+              />
+              <label for="weekly"
+                >Weekly: Repeat every
+                <input
+                  class="bg-blue-50 w-20 border border-gray-400 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
+                  type="number"
+                  name="freq_num"
+                  value="1"
+                  id="weekly_num"
+                />
+                week(s).
+              </label>
+              <div class="mt-4">
                 <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  class="grid grid-cols-7 border border-gray-400 rounded-full overflow-hidden bg-blue-50"
                 >
-                  <label for="sun" class="text-xs font-bold mb-1">SUN</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="SU"
-                    id="sun"
-                    class="w-4 h-4"
-                  />
-                </div>
-                <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
-                >
-                  <label for="mon" class="text-xs font-bold mb-1">MON</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="MO"
-                    id="mon"
-                    class="w-4 h-4"
-                  />
-                </div>
-                <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
-                >
-                  <label for="tue" class="text-xs font-bold mb-1">TUE</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="TU"
-                    id="tue"
-                    class="w-4 h-4"
-                  />
-                </div>
-                <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
-                >
-                  <label for="wed" class="text-xs font-bold mb-1">WED</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="WE"
-                    id="wed"
-                    class="w-4 h-4"
-                  />
-                </div>
-                <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
-                >
-                  <label for="thu" class="text-xs font-bold mb-1">THU</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="TH"
-                    id="thu"
-                    class="w-4 h-4"
-                  />
-                </div>
-                <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
-                >
-                  <label for="fri" class="text-xs font-bold mb-1">FRI</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="FR"
-                    id="fri"
-                    class="w-4 h-4"
-                  />
-                </div>
-                <div
-                  class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
-                >
-                  <label for="sat" class="text-xs font-bold mb-1">SAT</label>
-                  <input
-                    type="checkbox"
-                    name="day"
-                    value="SA"
-                    id="sat"
-                    class="w-4 h-4"
-                  />
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="sun" class="text-xs font-bold mb-1">SUN</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="SU"
+                      id="sun"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="mon" class="text-xs font-bold mb-1">MON</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="MO"
+                      id="mon"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="tue" class="text-xs font-bold mb-1">TUE</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="TU"
+                      id="tue"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="wed" class="text-xs font-bold mb-1">WED</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="WE"
+                      id="wed"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="thu" class="text-xs font-bold mb-1">THU</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="TH"
+                      id="thu"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="fri" class="text-xs font-bold mb-1">FRI</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="FR"
+                      id="fri"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                  <div
+                    class="flex flex-col items-center p-2 border-r border-gray-400 last:border-r-0"
+                  >
+                    <label for="sat" class="text-xs font-bold mb-1">SAT</label>
+                    <input
+                      type="checkbox"
+                      name="day"
+                      value="SA"
+                      id="sat"
+                      class="w-4 h-4"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            <p>
+              <input
+                type="radio"
+                name="frequency_type"
+                value="yearly"
+                id="yearly"
+              />
+              <label for="yearly"
+                >Yearly: Repeat every
+                <input
+                  class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
+                  type="number"
+                  name="freq_num"
+                  value="1"
+                  id="yearly_num"
+                />
+                year(s) .
+              </label>
+            </p>
           </div>
-          <p>
-            <input
-              type="radio"
-              name="frequency_type"
-              value="yearly"
-              id="yearly"
-            />
-            <label for="yearly"
-              >Yearly: Repeat every
+          <div>
+            <label>
+              Repeat for how many times?
               <input
                 class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
                 type="number"
                 name="freq_num"
                 value="1"
-                id="yearly_num"
-              />
-              year(s) .
-            </label>
-          </p>
+                id="count"
+            /></label>
+          </div>
         </div>
-        <div>
-          <label>
-            Repeat for how many times?
-            <input
-              class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
-              type="number"
-              name="freq_num"
-              value="1"
-              id="count"
-          /></label>
-        </div>
-      </div>
-      <p>
-        <label for="description">Description</label>
-        <textarea
-          class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
-          id="description"
-          rows="4"
-          cols="50"
-          placeholder="tell the correct chai recipe"
-        ></textarea>
-      </p>
-      <p>
-        <label for="location">Location</label>
-        <input
-          type="text"
-          class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
-          id="location"
-          rows="4"
-          cols="50"
-          placeholder="Friend's home"
-        />
-      </p>
-      <button
-        id="button"
-        class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
-        type="submit"
-        name="Submit"
-        value="Button"
-      >
-        Download
-      </button>
-      <button
-        id="share"
-        class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
-        name="Share"
-        value="Button"
-      >
-        Share
-      </button>
+        <p>
+          <label for="description">Description</label>
+          <textarea
+            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
+            id="description"
+            rows="4"
+            cols="50"
+            placeholder="tell the correct chai recipe"
+          ></textarea>
+        </p>
+        <p>
+          <label for="location">Location</label>
+          <input
+            type="text"
+            class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
+            id="location"
+            rows="4"
+            cols="50"
+            placeholder="Friend's home"
+          />
+        </p>
+        <button
+          id="button"
+          class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
+          type="submit"
+          name="Submit"
+          value="Button"
+        >
+          Download
+        </button>
+        <button
+          id="share"
+          class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
+          name="Share"
+          value="Button"
+        >
+          Share
+        </button>
 
-      <div class="pt-10 space-y-3 border-t border-gray-200 mt-10">
-        <div class="flex items-center space-x-3 text-xs italic text-gray-400">
-          <img
-            src="./download-circular-button.png"
-            class="w-5 h-5 opacity-30 grayscale"
-            alt="Download icon"
-          />
-          <span>Download</span>
+        <div class="pt-10 space-y-3 border-t border-gray-200 mt-10">
+          <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+            <img
+              src="./download-circular-button.png"
+              class="w-5 h-5 opacity-30 grayscale"
+              alt="Download icon"
+            />
+            <span>Download</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+            <img
+              src="./book.png"
+              class="w-5 h-5 opacity-30 grayscale"
+              alt="Book icon"
+            />
+            <span>Open to preview it in a calendar app</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+            <img
+              src="./send.png"
+              class="w-5 h-5 opacity-30 grayscale"
+              alt="Send icon"
+            />
+            <span>Share it with your friends 'n' family</span>
+          </div>
         </div>
-        <div class="flex items-center space-x-3 text-xs italic text-gray-400">
-          <img
-            src="./book.png"
-            class="w-5 h-5 opacity-30 grayscale"
-            alt="Book icon"
-          />
-          <span>Open to preview it in a calendar app</span>
-        </div>
-        <div class="flex items-center space-x-3 text-xs italic text-gray-400">
-          <img
-            src="./send.png"
-            class="w-5 h-5 opacity-30 grayscale"
-            alt="Send icon"
-          />
-          <span>Share it with your friends 'n' family</span>
-        </div>
+      </form>
+    </div>
+    <div id="download-ui" style="display: none">
+      <p class="text-center px-4 mx-auto my-33 text-3xl">
+        Event is getting downloaded <br />
+        3...2...1
+      </p>
+      <br />
+      <div class="text-center">
+        <button
+          id="redirect-ui"
+          class="text-xl font-semibold bg-blue-800 px-4 py-2 text-white rounded"
+          name="redirect-home"
+          value="Button"
+        >
+          Create Your Own Reminder
+        </button>
       </div>
-    </form>
+    </div>
+
     <footer class="mt-20 py-10 border-t border-gray-200">
       <div class="text-center text-xs text-gray-400 italic">
         <p>&copy; 2026 Timo &bull; Made with <3 Calra</p>

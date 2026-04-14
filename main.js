@@ -1,3 +1,26 @@
+window.addEventListener("DOMContentLoaded", async () => {
+  // code goes here
+  const urlPath = window.location.hash;
+  if (urlPath.startsWith("#id=")) {
+    document.getElementById("creator-ui").style.display = "none";
+    document.getElementById("download-ui").style.display = "block";
+    const id = urlPath.split("=")[1];
+
+    const cfLink = "http://localhost:8787/" + "e/" + id;
+    const response = await fetch(cfLink);
+
+    const data = await response.text();
+    const blob = new Blob([data], { type: "text/calendar" });
+    const downloadURL = URL.createObjectURL(blob);
+    const download = document.createElement("a");
+    download.href = downloadURL;
+    download.download = "event.ics";
+    document.body.appendChild(download);
+    download.click();
+    document.body.removeChild(download);
+  }
+});
+
 const startDate = document.getElementById("start_date");
 let today = new Date().toISOString().split("T")[0];
 startDate.value = today;
@@ -114,8 +137,6 @@ dayCheckboxes.forEach((cb) => {
 });
 
 function getEventData(event) {
-  console.log("value of event", event);
-  console.log("type of event", typeof event);
   event.preventDefault();
   const titleInput = document.getElementById("title").value.trim();
   if (!titleInput) {
@@ -227,8 +248,6 @@ function readDatafromKV() {
   // download the file
 }
 async function shareFile(event) {
-  console.log("inside share file!");
-  //  const cfLink = "https://calendar-worker.mailto-calra.workers.dev/save";
   const cfLink = "http://localhost:8787/save";
   const icsString = getEventData(event);
   let res = await fetch(cfLink, {
@@ -236,32 +255,11 @@ async function shareFile(event) {
     body: icsString,
   });
   const data = await res.json();
-  console.log("resp from worker", data);
-  const shareLink = `${window.location.origin}${window.location.pathname}e/${data.id}`;
+  const shareLink = `${window.location.origin}${window.location.pathname}#id=${data.id}`;
 
   alert(shareLink);
-  // Send this to cloudflare.
-  // const encoder = new TextEncoder();
-  // const uint8Array = encoder.encode(icsString);
-  const compressed = LZString.compressToEncodedURIComponent(icsString);
-  //  const base64 = uint8Array.toBase64({ alphabet: "base64url" });
-  console.log(compressed);
-  //  const shareLink = `${window.location.origin}${window.location.pathname}#data=${base64}`;
-  //  const shareLink = `${window.location.origin}${window.location.pathname}#data=${compressed}`;
-  // 2. Create File directly from the typed array
-  //
-  //
-  //  const file = new File([uint8Array], "event.ics", { type: "text/calendar" });
-  //
-  //  // 3. Debugging checks
-  //  console.log("File size:", file.size);
-  //  if (file.size === 0) return alert("File is empty!");
-  //  //  const blob = new Blob([finalIcs], { type: "text/calendar" });
   const titleInput = document.getElementById("title").value.trim() || "Event";
-  //  const fileName = title.replace(/[^a-z0-9]/gi, "_") + ".ics";
-  //  if (navigator.canShare && navigator.canShare({ files: [file] })) {
 
-  // const file = new File([blob], fileName, { type: "text/plain" });
   if (navigator.canShare) {
     try {
       await navigator.share({
