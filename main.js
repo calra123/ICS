@@ -278,11 +278,18 @@ async function shareFile(event) {
   }
 }
 
+function redirectHome() {
+  window.location.href = "/";
+}
 const button = document.getElementById("button");
+
 button.addEventListener("click", testFn);
 
 const shareBtn = document.getElementById("share");
 shareBtn.addEventListener("click", shareFile);
+
+const redirectBtn = document.getElementById("redirect-home");
+redirectBtn.addEventListener("click", redirectHome);
 
 function iso8601Basic(date) {
   return date.toString().replace(/[-:.]/g, "");
