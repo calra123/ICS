@@ -1,3 +1,12 @@
+const isDev =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+let API_BASE_URL = isDev
+  ? "http://localhost:8787/"
+  : "https://calendar-worker.mailto-calra.workers.dev/";
+// phone testing
+// API_BASE_URL = "https://calendar-worker.mailto-calra.workers.dev/";
 window.addEventListener("DOMContentLoaded", async () => {
   // code goes here
   const urlPath = window.location.hash;
@@ -6,7 +15,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("download-ui").style.display = "block";
     const id = urlPath.split("=")[1];
 
-    const cfLink = "http://localhost:8787/" + "e/" + id;
+    const cfLink = API_BASE_URL + "e/" + id;
     const response = await fetch(cfLink);
 
     const data = await response.text();
@@ -21,6 +30,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+const form = document.getElementById("form");
 const startDate = document.getElementById("start_date");
 let today = new Date().toISOString().split("T")[0];
 startDate.value = today;
@@ -238,17 +248,10 @@ function testFn(event) {
     button.classList.replace("bg-green-600", "bg-blue-800");
   }, 2000);
 }
-function sendDataToCloudFlare() {
-  // send ics file to cloudflare KV
-}
 
-function readDatafromKV() {
-  // read the link
-  // find the mapping
-  // download the file
-}
 async function shareFile(event) {
-  const cfLink = "http://localhost:8787/save";
+  console.log(API_BASE_URL);
+  const cfLink = API_BASE_URL + "save";
   const icsString = getEventData(event);
   let res = await fetch(cfLink, {
     method: "POST",
@@ -257,16 +260,17 @@ async function shareFile(event) {
   const data = await res.json();
   const shareLink = `${window.location.origin}${window.location.pathname}#id=${data.id}`;
 
-  alert(shareLink);
+  console.log(shareLink);
+  //  alert(shareLink);
+  console.log("hello");
   const titleInput = document.getElementById("title").value.trim() || "Event";
 
   if (navigator.canShare) {
     try {
       await navigator.share({
         url: shareLink,
-        // url: "https://google.com",
         title: "Event: " + titleInput,
-        text: `Hello! I created an event reminder for you :). Download it and add it to your calendar \n`,
+        text: `Hello! I made a reminder for you :)\n\nDownload and add it to your calendar!\n\n`,
       });
     } catch (err) {
       if (err.name !== "AbortError") {
@@ -274,9 +278,37 @@ async function shareFile(event) {
       }
     }
   } else {
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const dialog = document.getElementById("my-dialog");
+    const copyLink = document.getElementById("copy-link");
+    copyLink.value = shareLink;
+    dialog.showModal();
     console.warn("Browser does not support sharing files.");
   }
 }
+
+function copyToClipboard() {
+  // text
+  const copyLink = document.getElementById("copy-link");
+  copyLink.select();
+  copyLink.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(copyLink.value);
+
+  alert("copied the link", copyLink.value);
+}
+
+function closeDialog() {
+  const dialog = document.getElementById("my-dialog");
+  dialog.close();
+}
+const copyBtn = document.getElementById("copy-btn");
+copyBtn.addEventListener("click", copyToClipboard);
+
+const closeDialogBtn = document.getElementById("close");
+closeDialogBtn.addEventListener("click", closeDialog);
 
 function redirectHome() {
   window.location.href = "/";

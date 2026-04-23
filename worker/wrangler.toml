@@ -6,3 +6,9 @@ compatibility_date = "2026-04-10"
 binding = "CALENDAR_STORE"
 id = "5bcc3ead8ded48e99526c8391007c2ca"
 
+[vars]
+FRONTEND_URL = "http://localhost:3000"
+
+#PRODUCTION
+[env.production.vars]
+FRONTEND_URL = "https://timo-web.pages.dev"

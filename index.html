@@ -7,12 +7,21 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
     -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
+    <!--    <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:8787; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;"
     />
+-->
     <title>Timo: Right on Time!</title>
     <link href="./dist/output.css" rel="stylesheet" />
   </head>
@@ -285,7 +294,7 @@
         </p>
         <button
           id="button"
-          class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
+          class="font-semibold bg-blue-800 hover:bg-blue-900 transition-colors duration-200 ease-in-out px-4 py-2 text-white rounded"
           type="submit"
           name="Submit"
           value="Button"
@@ -294,15 +303,16 @@
         </button>
         <button
           id="share"
-          class="font-semibold bg-blue-800 px-4 py-2 text-white rounded"
+          class="font-semibold bg-blue-800 hover:bg-blue-900 transition-colors duration-200 ease-in-out px-4 py-2 text-white rounded"
           name="Share"
           value="Button"
         >
           Share
         </button>
-
-        <div class="pt-10 space-y-3 border-t border-gray-200 mt-10">
-          <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+        <div
+          class="flex col-items justify-center gap-5 pt-10 border-t border-gray-200 mt-10"
+        >
+          <div class="flex items-center space-x-1 text-xs italic text-gray-400">
             <img
               src="./download-circular-button.png"
               class="w-5 h-5 opacity-30 grayscale"
@@ -310,7 +320,7 @@
             />
             <span>Download</span>
           </div>
-          <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+          <div class="flex items-center space-x-1 text-xs italic text-gray-400">
             <img
               src="./book.png"
               class="w-5 h-5 opacity-30 grayscale"
@@ -318,7 +328,7 @@
             />
             <span>Open to preview it in a calendar app</span>
           </div>
-          <div class="flex items-center space-x-3 text-xs italic text-gray-400">
+          <div class="flex items-center space-x-1 text-xs italic text-gray-400">
             <img
               src="./send.png"
               class="w-5 h-5 opacity-30 grayscale"
@@ -329,6 +339,36 @@
         </div>
       </form>
     </div>
+    <dialog
+      id="my-dialog"
+      class="text-center m-auto bg-blue-100 shadow-lg p-0 overflow-hidden"
+    >
+      <div class="relative flex flex-col items-center w-full p-10">
+        <div class="absolute top-0 right-0 p-4">
+          <button
+            class="cursor-pointer font-semibold px-6 py-4 text-xl"
+            autofocus
+            id="close"
+          >
+            X
+          </button>
+        </div>
+        <p>Success!</p>
+        <div class="flex items-center gap-0 px-2 py-2">
+          <input
+            id="copy-link"
+            type="text"
+            class="bg-blue-50 border border-gray-400 block py-2 px-4 rounded focus:outline-none focus:border-teal-500"
+          />
+          <button
+            class="font-semibold bg-blue-800 hover:bg-blue-900 transition-colors duration-200 ease-in-out px-4 py-2 text-white rounded border border-transparent"
+            id="copy-btn"
+          >
+            Copy
+          </button>
+        </div>
+      </div>
+    </dialog>
     <div id="download-ui" style="display: none">
       <p class="text-center px-4 mx-auto my-33 text-3xl">
         Event is getting downloaded <br />

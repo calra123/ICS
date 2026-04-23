@@ -6,7 +6,7 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, {
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": env.FRONTEND_URL,
           "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
         },
@@ -24,7 +24,7 @@ export default {
       const response = new Response(JSON.stringify({ id }), {
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": env.FRONTEND_URL,
         },
       });
       return response;
@@ -36,7 +36,7 @@ export default {
       return new Response(icsData, {
         headers: {
           "Content-Type": "text/calendar",
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": env.FRONTEND_URL,
         },
       });
     }
