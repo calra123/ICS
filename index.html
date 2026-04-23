@@ -22,7 +22,7 @@
       content="default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:8787; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;"
     />
 -->
-    <title>Timo: Right on Time!</title>
+    <title>timo: Right on Time!</title>
     <link href="./dist/output.css" rel="stylesheet" />
   </head>
   <body class="bg-blue-100 font-nunito">
@@ -36,19 +36,19 @@
       </div>
 
       <div class="w-1/2 flex flex-col justify-center">
-        <h1 class="text-4xl font-bold">Timo</h1>
-        <p class="text-sm text-gray-600 max-w-xs">Create. Download. Share.</p>
+        <h1 class="text-4xl font-bold">timo</h1>
+        <p class="text-sm text-gray-600 max-w-xs">create. download. share.</p>
       </div>
     </div>
 
     <div id="creator-ui" style="display: block">
       <form id="form" class="px-4 my-22 max-w-3xl mx-auto space-y-6">
         <div>
-          <p class="text-3xl font-semibold">Create a reminder</p>
+          <p class="text-3xl font-semibold">create a reminder</p>
         </div>
 
         <p class="">
-          <label for="title">Title</label>
+          <label for="title">title</label>
           <input
             class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
             type="text"
@@ -59,7 +59,7 @@
         </p>
         <div class="flex space-x-2">
           <p class="">
-            <label for="start_date">Start Date</label>
+            <label for="start_date">start date</label>
             <input
               class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
               type="date"
@@ -68,7 +68,7 @@
             />
           </p>
           <p>
-            <label for="start_time">Start Time</label>
+            <label for="start_time">start time</label>
             <input
               id="start_time"
               class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500"
@@ -80,7 +80,7 @@
         </div>
         <div class="flex space-x-2">
           <p class="">
-            <label for="end_date">End Date</label>
+            <label for="end_date">end date</label>
             <input
               class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
               type="date"
@@ -90,7 +90,7 @@
           </p>
 
           <p>
-            <label for="end_time">End Time</label>
+            <label for="end_time">end time</label>
             <input
               id="end_time"
               class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:border-teal-500"
@@ -107,7 +107,7 @@
             name="repeat"
             class="w-4 h-4 transform scale-150 mx-1"
           />
-          <label for="repeat">Repeats?</label>
+          <label for="repeat">repeats?</label>
         </div>
         <div class="hidden" id="frequency_container">
           <div>
@@ -119,7 +119,7 @@
                 id="daily"
               />
               <label for="daily"
-                >Daily: Repeat every
+                >daily: repeat every
                 <input
                   class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
                   type="number"
@@ -138,7 +138,7 @@
                 id="weekly"
               />
               <label for="weekly"
-                >Weekly: Repeat every
+                >weekly: repeat every
                 <input
                   class="bg-blue-50 w-20 border border-gray-400 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
                   type="number"
@@ -247,7 +247,7 @@
                 id="yearly"
               />
               <label for="yearly"
-                >Yearly: Repeat every
+                >yearly: repeat every
                 <input
                   class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
                   type="number"
@@ -261,7 +261,7 @@
           </div>
           <div>
             <label>
-              Repeat for how many times?
+              repeat for how many times?
               <input
                 class="bg-blue-50 border border-gray-400 w-20 py-2 px-4 my-2 rounded-full focus:outline-none focus:border-teal-500"
                 type="number"
@@ -272,7 +272,7 @@
           </div>
         </div>
         <p>
-          <label for="description">Description</label>
+          <label for="description">description</label>
           <textarea
             class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
             id="description"
@@ -282,14 +282,14 @@
           ></textarea>
         </p>
         <p>
-          <label for="location">Location</label>
+          <label for="location">location</label>
           <input
             type="text"
             class="bg-blue-50 border border-gray-400 block py-2 px-4 w-full rounded focus:outline-none focus:border-teal-500"
             id="location"
             rows="4"
             cols="50"
-            placeholder="Friend's home"
+            placeholder="map's link to friend's home"
           />
         </p>
         <button
@@ -299,7 +299,7 @@
           name="Submit"
           value="Button"
         >
-          Download
+          download
         </button>
         <button
           id="share"
@@ -307,36 +307,8 @@
           name="Share"
           value="Button"
         >
-          Share
+          share
         </button>
-        <div
-          class="flex col-items justify-center gap-5 pt-10 border-t border-gray-200 mt-10"
-        >
-          <div class="flex items-center space-x-1 text-xs italic text-gray-400">
-            <img
-              src="./download-circular-button.png"
-              class="w-5 h-5 opacity-30 grayscale"
-              alt="Download icon"
-            />
-            <span>Download</span>
-          </div>
-          <div class="flex items-center space-x-1 text-xs italic text-gray-400">
-            <img
-              src="./book.png"
-              class="w-5 h-5 opacity-30 grayscale"
-              alt="Book icon"
-            />
-            <span>Open to preview it in a calendar app</span>
-          </div>
-          <div class="flex items-center space-x-1 text-xs italic text-gray-400">
-            <img
-              src="./send.png"
-              class="w-5 h-5 opacity-30 grayscale"
-              alt="Send icon"
-            />
-            <span>Share it with your friends 'n' family</span>
-          </div>
-        </div>
       </form>
     </div>
     <dialog
@@ -389,7 +361,7 @@
 
     <footer class="mt-20 py-10 border-t border-gray-200">
       <div class="text-center text-xs text-gray-400 italic">
-        <p>&copy; 2026 Timo &bull; Made with <3 Calra</p>
+        <p>&copy; 2026 timo &bull; made by Calra, one div at a time</p>
       </div>
     </footer>
 
