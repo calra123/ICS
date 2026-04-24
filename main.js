@@ -286,6 +286,7 @@ async function shareFile(event) {
     const copyLink = document.getElementById("copy-link");
     copyLink.value = shareLink;
     dialog.showModal();
+    //    showToaster();
     console.warn("Browser does not support sharing files.");
   }
 }
@@ -296,8 +297,9 @@ function copyToClipboard() {
   copyLink.select();
   copyLink.setSelectionRange(0, 99999);
   navigator.clipboard.writeText(copyLink.value);
+  showToaster();
 
-  alert("copied the link", copyLink.value);
+  // alert("copied the link", copyLink.value);
 }
 
 function closeDialog() {
@@ -335,6 +337,39 @@ function escapeICS(str) {
     .replace(/;/g, "\\;")
     .replace(/\n/g, "\\n");
 }
+function showToaster() {
+  // code
+  const toast = document.getElementById("toast");
+  toast.style = "display: block";
+  setTimeout(() => {
+    toast.style = "display:none";
+  }, 3000);
+}
+function showToast(message, type = "success") {
+  const container = document.getElementById("toast-container");
 
+  // Create element
+  const toast = document.createElement("div");
+
+  // Tailwind classes for the toast
+  toast.className = `flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow transition-opacity duration-500 ease-in-out`;
+
+  // Simple logic to change border color based on type
+  const borderColor =
+    type === "success" ? "border-green-500" : "border-red-500";
+  toast.classList.add("border-l-4", borderColor);
+
+  toast.innerHTML = `
+        <div class="ml-3 text-sm font-medium">${message}</div>
+    `;
+
+  container.appendChild(toast);
+
+  // Auto-remove after 3 seconds
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 500); // Wait for fade animation
+  }, 3000);
+}
 // Initialization
 setMinEndDate();
