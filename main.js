@@ -5,8 +5,7 @@ const isDev =
 let API_BASE_URL = isDev
   ? "http://localhost:8787/"
   : "https://calendar-worker.mailto-calra.workers.dev/";
-// phone testing
-// API_BASE_URL = "https://calendar-worker.mailto-calra.workers.dev/";
+
 window.addEventListener("DOMContentLoaded", async () => {
   // code goes here
   const urlPath = window.location.hash;
@@ -18,15 +17,17 @@ window.addEventListener("DOMContentLoaded", async () => {
     const cfLink = API_BASE_URL + "e/" + id;
     const response = await fetch(cfLink);
 
-    const data = await response.text();
-    const blob = new Blob([data], { type: "text/calendar" });
+    const data = await response.json();
+    const blob = new Blob([data.icsString], { type: "text/calendar" });
     const downloadURL = URL.createObjectURL(blob);
     const download = document.createElement("a");
     download.href = downloadURL;
-    download.download = "event.ics";
+    download.download = data.title;
     document.body.appendChild(download);
     download.click();
     document.body.removeChild(download);
+    document.getElementById("download-ui").querySelector("p").textContent =
+      "done!";
   }
 });
 
@@ -250,20 +251,21 @@ function testFn(event) {
 }
 
 async function shareFile(event) {
-  console.log(API_BASE_URL);
   const cfLink = API_BASE_URL + "save";
+  const titleInput = document.getElementById("title").value.trim() || "Event";
   const icsString = getEventData(event);
+  const calBody = { title: titleInput, icsString: icsString };
   let res = await fetch(cfLink, {
     method: "POST",
-    body: icsString,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(calBody),
   });
   const data = await res.json();
   const shareLink = `${window.location.origin}${window.location.pathname}#id=${data.id}`;
 
-  console.log(shareLink);
   //  alert(shareLink);
-  console.log("hello");
-  const titleInput = document.getElementById("title").value.trim() || "Event";
 
   if (navigator.canShare) {
     try {

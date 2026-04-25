@@ -19,8 +19,9 @@ export default {
       const id = Math.random().toString(36).substring(2, 8);
       // write a key-value pair
       console.log(request.body);
-      const icsString = await request.text();
-      await env.CALENDAR_STORE.put(id, icsString);
+      const calBody = await request.json();
+      const calBodyJSON = JSON.stringify(calBody);
+      await env.CALENDAR_STORE.put(id, calBodyJSON);
       const response = new Response(JSON.stringify({ id }), {
         headers: {
           "Content-Type": "application/json",
