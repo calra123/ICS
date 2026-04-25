@@ -4,9 +4,9 @@ const isDev =
 
 let API_BASE_URL = isDev
   ? "http://localhost:8787/"
-  : "https://calendar-worker.mailto-calra.workers.dev/";
+  : "https://calendar-worker-production.mailto-calra.workers.dev/";
 
-window.addEventListener("DOMContentLoaded", async () => {
+https: window.addEventListener("DOMContentLoaded", async () => {
   // code goes here
   const urlPath = window.location.hash;
   if (urlPath.startsWith("#id=")) {
