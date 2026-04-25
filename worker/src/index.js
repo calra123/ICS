@@ -40,23 +40,5 @@ export default {
         },
       });
     }
-    // read a key-value pair
-    const count = (await env.CALENDAR_STORE.get("visits")) || "0";
-    const newCount = parseInt(count) + 1;
-
-    await env.CALENDAR_STORE.put("visits", newCount.toString());
-    // list all key-value pairs
-    const allKeys = await env.CALENDAR_STORE.list();
-
-    // delete a key-value pair
-    await env.CALENDAR_STORE.delete("KEY");
-
-    // return a Workers response
-    return new Response(
-      JSON.stringify({
-        value: count,
-        allKeys: allKeys,
-      }),
-    );
   },
 };
